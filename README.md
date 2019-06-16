@@ -48,11 +48,12 @@ vizualize_coef_density(tuna) + ggtitle("Repeated Lassos",subtitle ="mpg~." ) +
   theme(plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5))
 ```
+![](f1.png)
 ##### Visualize distribution of standardized coefficient values
 ```{r, fig.width = 4 , fig.hieght =3}
 vizualize_coef_z_density(tuna)
 ```
-
+![](f2.png)
 # Vizualize mean cross-validation errors 
 Visualize mean cross-validation error for all values of the regularization 
 parameter lambda across all n repeated trials.  
@@ -63,6 +64,7 @@ value lamda in the first regularization trial.
 ```{r, fig.width = 4 , fig.hieght =3}
 vizualize_all_cverror(tuna)
 ```
+![](f3.png)
 
 # Tuna saves all the cvfit Results from glmnet
 Tuna save the cvfit results from glmnet, which can be plucked for downstream analysis.
@@ -70,4 +72,4 @@ Tuna save the cvfit results from glmnet, which can be plucked for downstream ana
 i=5
 plot(tuna[["fits"]][[i]])
 ```
-
+![](f4.png)
