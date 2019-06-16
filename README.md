@@ -42,19 +42,22 @@ Summary of the results.
 ```{r}
 tuna::summarize_repeated_lasso(tuna)
 ```
-##### Visualize the distribution of coefficient values accross n trials
+### Visualize the distribution of coefficient values accross n trials
+
 ```{r, fig.width = 4 , fig.hieght =3}
 vizualize_coef_density(tuna) + ggtitle("Repeated Lassos",subtitle ="mpg~." ) +
   theme(plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5))
 ```
 ![](f1.png)
-##### Visualize distribution of standardized coefficient values
+
+### Visualize distribution of standardized coefficient values
 ```{r, fig.width = 4 , fig.hieght =3}
 vizualize_coef_z_density(tuna)
 ```
 ![](f2.png)
-# Vizualize mean cross-validation errors 
+
+### Vizualize mean cross-validation errors 
 Visualize mean cross-validation error for all values of the regularization 
 parameter lambda across all n repeated trials.  
 The blue lines show the value of lambda.min that mininized the cross 
@@ -66,7 +69,7 @@ vizualize_all_cverror(tuna)
 ```
 ![](f3.png)
 
-# Tuna saves all the cvfit Results from glmnet
+### Tuna saves all the cvfit Results from glmnet
 Tuna save the cvfit results from glmnet, which can be plucked for downstream analysis.
 ```{r, fig.width = 4 , fig.hieght =3}
 i=5
