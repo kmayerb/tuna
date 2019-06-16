@@ -1,0 +1,26 @@
+Package: tuna
+Type: Package
+Title: See what may have passed through your glmnet.
+Version: 0.1.0
+Author: Koshlan Mayer-Blackwell
+Maintainer: The package maintainer <kmayerbl@fredhutch.com>
+Description: Tuna makes it easy to repeat regularized regressions 
+    in the popular package [glmnet] (https://www.jstatsoft.org/article/view/v033i01) 
+    and vizualize the results.  Lasso, ridge, and glmnet regressions typically use cross validation 
+    to determine a suitable value of the regularization hyperparameter
+    that minimizes the cross-validated estimate of out of sample error. 
+    The number of non-zero coefficients can vary depending on initialization
+    of coordinate gradient decent used to estimate arguments that maximize the penalized 
+    likelihood function. Therefore, if regularized regression is being used 
+    for feature selection it is worth repeating cross validation and gradient decent.
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    glmnet,
+    ggplot2,
+    dplyr,
+    tidyr,
+    purrr,
+    magrittr
+RoxygenNote: 6.1.1

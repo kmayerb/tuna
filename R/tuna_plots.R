@@ -1,0 +1,93 @@
+
+summarize_repeated_lasso <- function(x){
+  df = x[["df"]]
+  df %>% dplyr::group_by(var) %>%
+    dplyr::select(n, mean, sd, descr) %>%
+    dplyr::slice(1)
+}
+
+
+vizualize_all_cverror <- function(x){
+  plot(log10(x[["fits"]][[1]]$lambda), x[["fits"]][[1]]$cvm, type = "n",
+       ylab = x[["fits"]][[1]]$name,
+       xlab = expression(log[10]~"(lambda)"))
+
+  mm <- x[["fits"]][[1]]$nzero
+
+  axis(3, at = log10(x[["fits"]][[1]]$lambda), labels = mm, cex.axis= .5)
+  purrr::walk(x[["fits"]], ~points(log10(.x$lambda), .x$cvm,type = "l", col = '#00000020'))
+  purrr::walk(x[["fits"]], ~abline(v = log10(.x$lambda.min), lty = 1, col = '#0000FF20'))
+
+
+  purrr::map(x[["fits"]], ~points(log10(x = .x$lambda.min),
+                                     y = .x$cvm[which(.x$lambda == .x$lambda.min)],
+                                     cex = .8, pch = 20, col = '#0000FF20'))
+
+
+
+  cvms <- purrr::map(x[["fits"]], function(x) x$cvm)
+  cvm_mean <- apply(purrr::invoke(cbind, cvms),1, mean)
+
+  points(log10(x[["fits"]][[1]]$lambda), cvm_mean, col = "black", type = "l", lty =2,  lwd = 2)
+}
+
+
+vizualize_coef_z_density = function(x){
+  df = x[["df"]]
+  ggplot(df, aes(x = z)) +
+    geom_density(fill = "black") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, size = 6),
+          axis.text.y = element_text( size = 8),
+          strip.text.x = element_text(size = 8, colour = "red")) +
+    facet_wrap(~descr, scale = "free_y") +
+    ylab("") +
+    xlab("coef Z")
+}
+
+
+
+vizualize_coef_density = function(x){
+  df = x[["df"]]
+  df <- df %>% dplyr::mutate(sign = sign(mean)) %>%
+    dplyr::mutate(cl = ifelse(sign > 0, "pos", "neg"))
+
+  ggplot(df, aes(x = coef, fill = cl, col = cl)) +
+    geom_density() +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, size = 6),
+          axis.text.y = element_text( size = 8),
+          strip.text.x = element_text(size = 8, colour = "red")) +
+    theme(legend.position = "none") +
+    facet_wrap(~descr, scale = "free_y") +
+    scale_fill_manual(values = c("#17becf", "#bcbd22")) +
+    scale_color_manual(values = c("#17becf", "#bcbd22")) +
+    ylab("Density") +
+    xlab("Coefficient (Z-score)") +
+    geom_vline(xintercept = 0, lty = 2, lwd = .5)
+}
+
+vizualize_coef_histograms <- function(x){
+  df = x[["df"]]
+  ggplot(df, aes(x = coef)) +
+    geom_histogram(fill = "black") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 90, size = 6),
+          axis.text.y = element_text( size = 8),
+          strip.text.x = element_text(size = 8, colour = "red")) +
+    facet_wrap(~descr, scale = "free") +
+    xlab("") +
+    ylab("")
+}
+
+get_lambda_mins <- function(x){
+  lambda_mins <- purrr::map(x[["fits"]], ~return(.x$lambda.min))
+}
+
+get_cv_mins <- function(x){
+  cv_mins <- purrr::map(x[["fits"]], ~return(.x$cvm[which(.x$lambda == .x$lambda.min)]))
+}
+get_coefs_df <- function(x){
+  coefs <- purrr::map(x[["fits"]], ~return(as.matrix(coef(.x, lambda = .x$lambda.min))))
+  coefs_df<- purrr::map_df(coefs, ~return(data.frame(var = rownames(.x), coef = .x[,1])))
+}
