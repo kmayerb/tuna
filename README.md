@@ -28,7 +28,6 @@ install_github("kmayerb/tuna")
 ### Usage
 
 ```{r, echo = T, warnings = F, message = F}
-devtools::load_all(".")
 require(tuna)
 ```
 Define a response vector and predictor matrix. Specify the the number of repeated trials. 
