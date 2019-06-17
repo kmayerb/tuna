@@ -44,6 +44,8 @@ tuna::summarize_repeated_lasso(tuna)
 ```
 ### Visualize the distribution of coefficient values accross n trials
 
+NOTE: the name of each variable includes _x/100  indicating the number of times that the variable had a non zero coefficient in the model with the minimum cross validation error. 
+
 ```{r, fig.width = 4 , fig.hieght =3}
 visualize_coef_density(tuna) + ggtitle("Repeated Lassos",subtitle ="mpg~." ) +
   theme(plot.title = element_text(hjust = 0.5),
@@ -66,7 +68,7 @@ indiate the number of parameters with non-zero coefficient for a given
 value lamda in the first regularization trial. 
 ```{r, fig.width = 4 , fig.hieght =3}
 visualize_all_cverror(tuna)
-```
+```  
 ![](f3.png)
 
 ### Tuna saves all the cvfit Results from glmnet
