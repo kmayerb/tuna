@@ -42,6 +42,23 @@ Summarize the results.
 ```{r}
 tuna::summarize_repeated_lasso(tuna)
 ```
+
+```bash
+   var             n     mean       sd descr                
+   <fct>       <int>    <dbl>    <dbl> <chr>                
+ 1 (Intercept)   100 31.4     4.70     (Intercept)_(100/100)
+ 2 am              5 -3.90    0.0141   am_(5/100)           
+ 3 carb           12 -0.369   0.410    carb_(12/100)        
+ 4 cyl           100 -0.181   0.295    cyl_(100/100)        
+ 5 disp            5 -0.00190 0.000236 disp_(5/100)         
+ 6 drat            5  7.17    0.230    drat_(5/100)         
+ 7 gear            5 -5.64    0.297    gear_(5/100)         
+ 8 hp            100 -0.0303  0.00558  hp_(100/100)         
+ 9 qsec            5 -0.585   0.0159   qsec_(5/100)         
+10 vs              5 -3.58    0.0265   vs_(5/100)           
+11 wt            100 -1.95    0.154    wt_(100/100)   
+```
+
 ### Visualize the distribution of coefficient values accross n trials
 
 NOTE: the name of each variable includes _x/100  indicating the number of times that the variable had a non zero coefficient in the model with the minimum cross validation error. 
